@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ title }}</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    </head>
+    <body class="a">
+        {% if user_id is not None %}
+            <div class="topnav">
+                <a class="active" href="{% url 'index_page' %}">Home</a>
+                <a href="{% url 'user_wishlists' username %}">My wishlists</a>
+                <a class="b" href="{% url 'user_shoplists' username %}">My shopping lists</a>
+            </div>
+            <span class="b"><a href="{% url 'logout_page' %}">Logout</a></span>
+            <span class="b">Hello,  {{ username }}  </span>
+        {% else %}
+            <div class="topnav">
+                <a class="active" href="{% url 'index_page' %}">Home</a>
+                <a class="active" href="{% url 'login_page' %}">LogIn</a>
+                <a href="{% url 'register_page' %}">Register here</a>
+            </div>
+        {% endif %}
+
+    {% block body %}
+
+    {% endblock %}
+
+    </body>
+</html>

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    {% if user_id is not None %}
+        <h1>My Shopping List and Wish List will be here</h1>
+        <a class="btn" href="{% url 'user_wishlists' username %}">My wishlists</a>
+        <a class="b" href="{% url 'user_shoplists' username %}">My shopping lists</a>
+    {% else %}
+        <h1>My Shopping List and Wish List will be here</h1>
+    {% endif %}
+
+{% endblock %}

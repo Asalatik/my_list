@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block body %}
+{% if wishlists is not None %}
+    {% for wishlist in wishlists %}
+        <details>
+            <summary class="h">{{ wishlist }}</summary>
+            <center>{% for product in wishlist.product.all %}
+                <a href="{{ product.link }}" target="_blank">{{ product.title }}</a>
+                <img src="{{ product.image.url }}" width="170">
+                {% if is_owner_list %}
+                    <a class="btn" href="{% url 'delete_wish' wishlist.pk product.pk %}">delete wish</a><hr>
+                {% endif %}
+                {% endfor %}</center>
+
+                {% if is_owner_list %}
+                    <a class="btn" href="{% url 'add_wish' username wishlist.pk %}">Add a Wish in {{ wishlist }}</a>
+                    <a class="btn" href="{% url 'delete_wishlist' wishlist.pk %}">Delete {{ wishlist }}</a><br>
+                {% endif %}
+        </details>
+    {% endfor %}
+    {% if is_owner_list %}
+        <details>
+            <summary class="test">Create a new wishlist</summary>
+            <form method="POST">
+                {% csrf_token %}
+                <label for="title">Title</label>
+                <input name="title"><br>
+                <label for="is_hidden">Is hidden</label>
+                <input type="checkbox" name="is_hidden" checked><br>
+                <select name="owner" required id="id_owner">
+                    <option value="{{ user_id }}" selected>{{username}}</option>
+                </select><br>
+                <button type="submit">ADD</button>
+            </form>
+        </details>
+    {% endif %}
+{% endif %}
+
+{% endblock %}
