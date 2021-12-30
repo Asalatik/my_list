@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.models import User
 
-from .models import Product, Wishlist
+from .models import Product, Wishlist, Shoplist
 
 
 class CreateUserForm(ModelForm):
@@ -21,3 +21,15 @@ class WishListForm(forms.ModelForm):
     class Meta:
         model = Wishlist
         fields = ['title', 'is_hidden', 'owner']
+
+
+class ShopListForm(forms.ModelForm):
+    class Meta:
+        model = Shoplist
+        fields = ['title', 'is_hidden', 'owner']
+
+
+class ShopproductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ['title', 'price', 'product_type']

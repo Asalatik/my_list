@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<h1>Add a new product in {{ shoplist }}</h1>
+<form method="POST" action="">
+    {% csrf_token %}
+    <label for="title">Title</label>
+        <input name="title"><br>
+    <label for="price">Quantity</label>
+        <input name="price"><br>
+    <select name="product_type" required id="id_product_type">
+        <option value="sh_p" selected>shopping</option>
+    </select>
+    <button type="submit">ADD</button>
+</form>
+
+{% endblock %}

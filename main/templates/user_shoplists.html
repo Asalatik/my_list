@@ -1,6 +1,43 @@
 {% extends 'base.html' %}
-
 {% block body %}
-<h1>Page for users shopping lists</h1>
-<textarea name="text" placeholder="Текст сообщения"></textarea>
+{% if shoplists is not None %}
+    {% for shoplist in shoplists %}
+        <details>
+            <summary class="h">{{ shoplist.title }}</summary>
+                {% for product in shoplist.product.all %}
+                    {% if is_owner_list %}
+                       <center><ul>
+                            <li>{{ product.title }} - {{ product.price }} ({{ product.created_at }}) <a class="btn" href="{% url 'delete_wish' shoplist.title product.pk %}">delete product</a></li>
+                        </ul></center>
+                    {% else %}
+                        <center><ul>
+                            <li>{{ product.title }} - {{ product.price }} ({{ product.created_at }})</li>
+                        </ul></center>
+                    {% endif %}
+                    {% endfor %}
+
+                {% if is_owner_list %}
+                    <a class="btn" href="{% url 'add_wish' username shoplist.title %}">Add a product in {{ shoplist.title }}</a>
+                    <a class="btn" href="{% url 'delete_shoplist' shoplist.pk %}">Delete {{ shoplist.title }}</a><br>
+                {% endif %}
+        </details>
+    {% endfor %}
+
+{% endif %}
+{% if is_owner_list %}
+    <details>
+        <summary class="test">Create a new shopping list</summary>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="title">Title</label>
+            <input name="title"><br>
+            <label for="is_hidden">Is hidden</label>
+            <input type="checkbox" name="is_hidden" checked><br>
+            <select name="owner" required id="id_owner">
+                <option value="{{ user_id }}" selected>{{username}}</option>
+            </select><br>
+            <button type="submit">ADD</button>
+        </form>
+    </details>
+{% endif %}
 {% endblock %}
