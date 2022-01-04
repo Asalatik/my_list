@@ -6,17 +6,17 @@
         {% load static %}
         <link rel="stylesheet" href="{% static 'style.css' %}">
     </head>
-    <body class="a">
+    <body class="all_style">
         {% if user_id is not None %}
-            <div class="topnav">
+            <div class="head">
                 <a class="active" href="{% url 'index_page' %}">Home</a>
                 <a href="{% url 'user_wishlists' user %}">My wishlists</a>
-                <a class="b" href="{% url 'user_shoplists' user %}">My shopping lists</a>
+                <a class="btn2" href="{% url 'user_shoplists' user %}">My shopping lists</a>
             </div>
-            <span class="b"><a href="{% url 'logout_page' %}">Logout</a></span>
-            <span class="b">Hello,  {{ user }}  </span>
+            <span class="btn2"><a href="{% url 'logout_page' %}">Logout</a></span>
+            <span class="btn2">Hello,  {{ user }}  </span>
         {% else %}
-            <div class="topnav">
+            <div class="head">
                 <a class="active" href="{% url 'index_page' %}">Home</a>
                 <a class="active" href="{% url 'login_page' %}">LogIn</a>
                 <a href="{% url 'register_page' %}">Register here</a>

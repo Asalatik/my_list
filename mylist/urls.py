@@ -18,7 +18,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-from main.views import index, register_user, login_user, logout_user, user_wishlists, user_shoplists, delete_wish, add_wish, delete_wishlist, delete_shoplist
+from main.views import index, register_user, login_user, logout_user, user_wishlists, user_shoplists, delete_wish_or_product, edit_list, delete_wishlist, delete_shoplist
 
 
 urlpatterns = [
@@ -29,8 +29,8 @@ urlpatterns = [
     path('logout/', logout_user, name='logout_page'),
     path('my_wishlists/<str:username>', user_wishlists, name='user_wishlists'),
     path('my_shoplists/<str:username>', user_shoplists, name='user_shoplists'),
-    path('delete_wish/<str:wishlist_title>/<int:product_pk>', delete_wish, name='delete_wish'),
-    path('my_wishlists/<str:username>/<str:wishlist_title>', add_wish, name='add_wish'),
+    path('delete_wish_or_product/<str:type_page>/<str:list_type>/<int:list_pk>/<int:product_pk>', delete_wish_or_product, name='delete_wish_or_product'),
+    path('<str:list_type>/<str:username>/<int:list_pk>', edit_list, name='edit_list'),
     path('delete_wishlist/<int:wishlist_pk>', delete_wishlist, name='delete_wishlist'),
     path('delete_shoplist/<int:shoplist_pk>', delete_shoplist, name='delete_shoplist'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

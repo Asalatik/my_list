@@ -1,32 +1,10 @@
 {% extends 'base.html' %}
+
 {% block body %}
-{% if shoplists is not None %}
-    {% for shoplist in shoplists %}
-        <details>
-            <summary class="h">{{ shoplist.title }}</summary>
-                {% for product in shoplist.product.all %}
-                    {% if is_owner_list %}
-                       <center><ul>
-                            <li>{{ product.title }} - {{ product.price }} ({{ product.created_at }}) <a class="btn" href="{% url 'delete_wish' shoplist.title product.pk %}">delete product</a></li>
-                        </ul></center>
-                    {% else %}
-                        <center><ul>
-                            <li>{{ product.title }} - {{ product.price }} ({{ product.created_at }})</li>
-                        </ul></center>
-                    {% endif %}
-                    {% endfor %}
 
-                {% if is_owner_list %}
-                    <a class="btn" href="{% url 'add_wish' username shoplist.title %}">Add a product in {{ shoplist.title }}</a>
-                    <a class="btn" href="{% url 'delete_shoplist' shoplist.pk %}">Delete {{ shoplist.title }}</a><br>
-                {% endif %}
-        </details>
-    {% endfor %}
-
-{% endif %}
 {% if is_owner_list %}
     <details>
-        <summary class="test">Create a new shopping list</summary>
+        <summary class="btn">Create a new shopping list</summary>
         <form method="POST">
             {% csrf_token %}
             <label for="title">Title</label>
@@ -40,4 +18,47 @@
         </form>
     </details>
 {% endif %}
+
+{% if shoplists is not None %}
+    {% for shoplist in shoplists %}
+        <details>
+            <summary class="h">{{ shoplist.title }}</summary>
+                {% for product in shoplist.product.all %}
+                    {% if is_owner_list %}
+                       <center><ul>
+                            <li>{{ product.title }} - {{ product.price }} ({{ product.created_at }}) <a class="btn" href="{% url 'delete_wish_or_product' type_page list_type shoplist.pk product.pk %}">delete product</a></li>
+                        </ul></center>
+                    {% else %}
+                        <center><ul>
+                            <li>{{ product.title }} - {{ product.price }} ({{ product.created_at }})</li>
+                        </ul></center>
+                    {% endif %}
+                {% endfor %}
+
+                {% if is_owner_list %}
+                    <details>
+                        <summary class="b">Add a product in "{{ shoplist.title }}"</summary>
+                            <form method="POST" action="">
+                                {% csrf_token %}
+                                <label for="title">Title</label>
+                                    <input name="title"><br>
+                                <label for="price">Quantity</label>
+                                    <input name="price"><br>
+                                <select name="product_type" required id="id_product_type">
+                                    <option value="sh_p" selected>shopping</option>
+                                </select>
+                                <input type="hidden" name="shoplist_pk" value="{{ shoplist.pk }}">
+                                <button type="submit">ADD</button>
+                            </form>
+                    </details>
+                    <a class="btn" href="{% url 'edit_list' list_type username shoplist.pk %}">Edit {{ shoplist.title }}</a>
+                    <a class="btn" href="{% url 'delete_shoplist' shoplist.pk %}">Delete {{ shoplist.title }}</a><br>
+                {% endif %}
+        </details>
+    {% endfor %}
+
+{% else %}
+    <h1>You do not have any shopping lists. Create one here.</h1>
+{% endif %}
+
 {% endblock %}

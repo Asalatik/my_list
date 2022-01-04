@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block body %}
+
+{% if is_owner_list %}
+
+    <h1 class="h2">Add a new product in "{{ shoplist.title }}"</h1>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <label for="title">Title</label>
+            <input name="title"><br>
+            <label for="price">Quantity</label>
+            <input name="price"><br>
+            <select name="product_type" required id="id_product_type">
+                <option value="sh_p" selected>shopping</option>
+            </select>
+            <input type="hidden" name="shoplist_pk" value="{{ shoplist.pk }}">
+            <button type="submit">ADD</button>
+        </form>
+
+{% endif %}
+
+<center><h1 class="h">{{ shoplist.title }}</h1></center>
+    {% for product in shoplist.product.all %}
+        {% if is_owner_list %}
+            <center><ul>
+                <li>{{ product.title }} - {{ product.price }} ({{ product.created_at }}) <a class="btn" href="{% url 'delete_wish_or_product' type_page list_type shoplist.pk product.pk %}">delete product</a></li>
+            </ul></center>
+        {% else %}
+            <center><ul>
+                <li>{{ product.title }} - {{ product.price }} ({{ product.created_at }})</li>
+            </ul></center>
+        {% endif %}
+    {% endfor %}
+
+{% if is_owner_list %}
+    <a class="b" href="{% url 'delete_shoplist' shoplist.pk %}">Delete {{ shoplist.title }}</a><br>
+{% endif %}
+
+{% endblock %}

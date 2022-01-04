@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block body %}
+{% if is_owner_list %}
+    <h1>Add a new wish in {{ wishlist }}</h1>
+    <form method="POST" enctype="multipart/form-data" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">ADD</button>
+    </form>
+{% endif %}
+
+<center><h1 class="h">{{ wishlist.title }}</h1></center>
+    {% for product in wishlist.product.all %}
+        {% if is_owner_list %}
+            <img src="{{ product.image.url }}" width="250">
+            <center>
+                <a href="{{ product.link }}" target="_blank">{{ product.title }}</a>
+                <p>{{ product.note }}</p>
+                <p>{{ product.created_at }}</p>
+                <a class="btn" href="{% url 'delete_wish_or_product' type_page list_type wishlist.pk product.pk %}">delete wish</a></center>
+        {% else %}
+            <img src="{{ product.image.url }}" width="250">
+            <center><a href="{{ product.link }}" target="_blank">{{ product.title }}</a>
+                <p>{{ product.note }}</p>
+                <p>{{ product.created_at }}</p></center>
+        {% endif %}
+    {% endfor %}
+{% if is_owner_list %}
+    <a class="b" href="{% url 'delete_wishlist' wishlist.pk %}">Delete {{ wishlist.title }}</a><br>
+{% endif %}
+{% endblock %}

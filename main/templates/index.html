@@ -1,13 +1,26 @@
 {% extends 'base.html' %}
 
 {% block body %}
+<h1>Create a wishlist</h1>
 
+<h3>Create an online wishlist on My Wishlist.</h3>
+<ul>
+    <li>Add items from any store</li>
+    <li>Family & friends can reserve gifts</li>
+    <li>Easy and free</li>
+</ul>
     {% if user_id is not None %}
         <h1>My Shopping List and Wish List will be here</h1>
         <a class="btn" href="{% url 'user_wishlists' username %}">My wishlists</a>
         <a class="b" href="{% url 'user_shoplists' username %}">My shopping lists</a>
     {% else %}
-        <h1>My Shopping List and Wish List will be here</h1>
+        <h1>1. Create Wishlist</h1><h1 class="right">Create Shopping List</h1>
+        <p>Creating your wishlist is easy! Add items from any store.</p><p class="right">Creating your shopping list is easy! Add products in your list.</p>
+        <h1>2. Send</h1><h1 class="right">2. Send</h1>
+        <p>Send your wishlist to anyone. By email, chat or social media.</p><p class="right">Send your wishlist to anyone. By email, chat or social media.</p>
+        <h1>3. Reserve</h1><h1 class="right">3. Usability</h1>
+        <p>Family and friends can reserve their gifts on your wishlist. Useful!</p><p class="right">Anyone can use your list to shop. Even husband!<p/>
+
     {% endif %}
 
 {% endblock %}

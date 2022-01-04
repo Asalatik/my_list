@@ -25,6 +25,7 @@ def index(request):
 def user_wishlists(request, username):
     user_login = request.user
     user_id = request.user.id
+
     user = get_object_or_404(User, username=username)
     try:
         wishlists = get_list_or_404(Wishlist, owner=user)
@@ -44,6 +45,8 @@ def user_wishlists(request, username):
                 'username': username,
                 'user': user_login,
                 'user_id': user_id,
+                'list_type': 'my_wishlists',
+                'type_page': 'lists',
             }
 
             return render(request, 'user_wishlists.html', context)
@@ -65,26 +68,36 @@ def user_wishlists(request, username):
                 'username': username,
                 'user': user_login,
                 'user_id': user_id,
+                'list_type': 'my_wishlists',
+                'type_page': 'lists',
             }
 
             return render(request, 'user_wishlists.html', context)
 
 
 @login_required(login_url='login_page')
-def delete_wish(request, wishlist_title, product_pk):
+def delete_wish_or_product(request, type_page, list_type, list_pk,  product_pk):
     user_login = request.user
-    try:
-        wishlist = get_object_or_404(Wishlist, title=wishlist_title)
+
+    if list_type == 'my_wishlists':
+        wishlist = get_object_or_404(Wishlist, pk=list_pk)
         pr = get_object_or_404(Product, pk=product_pk)
         wishlist.product.remove(pr)
 
-        return redirect('user_wishlists', user_login)
-    except:
-        shoplist = get_object_or_404(Shoplist, title=wishlist_title)
+        if type_page == 'lists':
+            return redirect('user_wishlists', user_login)
+        elif type_page == 'list':
+            return redirect('edit_list', 'my_wishlists', user_login, list_pk)
+
+    elif list_type == 'my_shoplists':
+        shoplist = get_object_or_404(Shoplist, pk=list_pk)
         pr = get_object_or_404(Product, pk=product_pk)
         shoplist.product.remove(pr)
 
-        return redirect('user_shoplists', user_login)
+        if type_page == 'lists':
+            return redirect('user_shoplists', user_login)
+        elif type_page == 'list':
+            return redirect('edit_list', 'my_shoplists', user_login, list_pk)
 
 
 @login_required(login_url='login_page')
@@ -106,13 +119,10 @@ def delete_shoplist(request, shoplist_pk):
 
 
 @login_required(login_url='login_page')
-def add_wish(request, username, wishlist_title):
-    """
-    попробовать pk заменить на title
-    """
-    username = request.user
-    try:
-        wishlist = get_object_or_404(Wishlist, title=wishlist_title)
+def edit_list(request, list_type, username, list_pk):
+    user = str(request.user)
+    if list_type == 'my_wishlists':
+        wishlist = get_object_or_404(Wishlist, pk=list_pk)
         if request.method == 'POST':
             form = ProductForm(request.POST, request.FILES)
 
@@ -121,22 +131,25 @@ def add_wish(request, username, wishlist_title):
                 wishlist.product.add(instance_product)
                 wishlist.save()
 
-                return redirect('user_wishlists', username)
-
         elif request.method == 'GET':
             form = ProductForm
-            context = {
-                'title': 'add wish in ' + str(wishlist),
-                'username': username,
-                'user_id': request.user.id,
-                'user': request.user,
-                'form': form,
-                'wishlist': wishlist,
-            }
 
-            return render(request, 'add_wish.html', context)
-    except:
-        shoplist = get_object_or_404(Shoplist, title=wishlist_title)
+        context = {
+            'title': 'Edit ' + str(wishlist),
+            'username': username,
+            'user_id': request.user.id,
+            'user': request.user,
+            'form': form,
+            'wishlist': wishlist,
+            'is_owner_list': username == user,
+            'list_type': list_type,
+            'type_page': 'list',
+        }
+
+        return render(request, 'edit_wishlist.html', context)
+
+    elif list_type == 'my_shoplists':
+        shoplist = get_object_or_404(Shoplist, pk=list_pk)
         if request.method == 'POST':
             form = ShopproductForm(request.POST)
 
@@ -145,20 +158,22 @@ def add_wish(request, username, wishlist_title):
                 shoplist.product.add(instance_product)
                 shoplist.save()
 
-                return redirect('user_shoplists', username)
-
         elif request.method == 'GET':
             form = ShopproductForm
-            context = {
-                'title': 'add product in ' + str(shoplist),
-                'username': username,
-                'user_id': request.user.id,
-                'user': request.user,
-                'form': form,
-                'shoplist': shoplist,
-            }
 
-            return render(request, 'add_product.html', context)
+        context = {
+            'title': 'Edit ' + str(shoplist),
+            'username': username,
+            'user_id': request.user.id,
+            'user': request.user,
+            'form': form,
+            'shoplist': shoplist,
+            'is_owner_list': username == user,
+            'list_type': list_type,
+            'type_page': 'list',
+        }
+
+        return render(request, 'edit_shoplist.html', context)
 
 
 @login_required(login_url='login_page')
@@ -169,7 +184,6 @@ def user_shoplists(request, username):
     try:
         shoplists = get_list_or_404(Shoplist, owner=user)
         if request.method == 'POST':
-
             form = ShopListForm(request.POST)
             instance_shoplist = form.save()
             Shoplist.save(instance_shoplist)
@@ -184,19 +198,30 @@ def user_shoplists(request, username):
                 'username': username,
                 'user': user_login,
                 'user_id': user_id,
+                'list_type': 'my_shoplists',
+                'type_page': 'lists',
             }
 
             return render(request, 'user_shoplists.html', context)
 
     except:
-        if request.method == 'POST':
-
+        if request.method == 'POST' and 'owner' in request.POST.keys():
             form = ShopListForm(request.POST)
             instance_shoplist = form.save()
             Wishlist.save(instance_shoplist)
 
             return redirect('user_shoplists', username)
+        elif request.method == 'POST' and 'owner' not in request.POST.keys():
 
+            shoplist = get_object_or_404(Shoplist, pk=request.POST.get('shoplist_pk'))
+            form = ShopproductForm(request.POST)
+
+            if form.is_valid():
+                instance_product = form.save()
+                shoplist.product.add(instance_product)
+                shoplist.save()
+
+                return redirect('user_shoplists', username)
         elif request.method == 'GET':
             context = {
                 'title': str(username) + 's shopping lists',
@@ -205,6 +230,8 @@ def user_shoplists(request, username):
                 'username': username,
                 'user': user_login,
                 'user_id': user_id,
+                'list_type': 'my_shoplists',
+                'type_page': 'lists',
             }
 
             return render(request, 'user_shoplists.html', context)

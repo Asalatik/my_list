@@ -1,15 +1,15 @@
-.a {
+.all_style {
     background-color: khaki;
     font-family: "Comic Sans MS";
     font-size: large;
 }
 
-.topnav {
+.head {
   overflow: hidden;
   background-color: #f7ba5b;
 }
 
-.topnav a {
+.head a {
   float: left;
   color: white;
   text-align: center;
@@ -18,20 +18,20 @@
   font-size: 17px;
 }
 
-.topnav a:hover {
+.head a:hover {
   background-color: #ddd;
   color: black;
 }
 
-.topnav a.active {
+.head a.active {
   background-color: #4CAF50;
   color: blueviolet;
 }
 
 .btn {
     display: inline-block; /* Строчно-блочный элемент */
-    background: #8C959D; /* Серый цвет фона */
-    color: #fff; /* Белый цвет текста */
+    background: cornflowerblue; /* Серый цвет фона */
+    color: white; /* Белый цвет текста */
     padding: 1rem 1.5rem; /* Поля вокруг текста */
     text-decoration: none; /* Убираем подчёркивание */
     border-radius: 3px; /* Скругляем уголки */
@@ -40,8 +40,18 @@
 .b {
     float: right;
     display: inline-block; /* Строчно-блочный элемент */
-    background: #8C959D; /* Серый цвет фона */
-    color: wheat; /* Белый цвет текста */
+    background: cornflowerblue; /*Синий цвет фона */
+    color: white; /* Белый цвет текста */
+    padding: 1rem 1.5rem; /* Поля вокруг текста */
+    text-decoration: none; /* Убираем подчёркивание */
+    border-radius: 3px; /* Скругляем уголки */
+}
+
+.btn2 {
+    float: right;
+    display: inline-block; /* Строчно-блочный элемент */
+    background: darkcyan; /* Серый цвет фона */
+    color: white; /* Белый цвет текста */
     padding: 1rem 1.5rem; /* Поля вокруг текста */
     text-decoration: none; /* Убираем подчёркивание */
     border-radius: 3px; /* Скругляем уголки */
@@ -49,10 +59,17 @@
 
 .h {
     font-size: 60px;
-    margin-top: 20%;
+    margin-top: 10%;
+    color: #4CAF50;
 }
 
-.test {
+.h2 {
+    font-size: 30px;
+    margin-top: 10%;
+    color: lightcoral;
+}
+
+.right {
+    float: right;
     color: green;
-    margin-top: 20%;
 }
