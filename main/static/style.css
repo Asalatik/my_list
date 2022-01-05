@@ -30,7 +30,7 @@
 
 .btn {
     display: inline-block; /* Строчно-блочный элемент */
-    background: cornflowerblue; /* Серый цвет фона */
+    background: cornflowerblue; /* Синий цвет фона */
     color: white; /* Белый цвет текста */
     padding: 1rem 1.5rem; /* Поля вокруг текста */
     text-decoration: none; /* Убираем подчёркивание */
@@ -72,4 +72,22 @@
 .right {
     float: right;
     color: green;
+}
+
+.index_a {
+    text-decoration: none;
+    color: lightcoral;
+    font-size: 35px;
+}
+
+.index_wish {
+    width: 300px;
+    color: lightcoral;
+    float: left;
+}
+
+.index_shop {
+    width: 300px;
+    color:lightcoral;
+    float: right;
 }

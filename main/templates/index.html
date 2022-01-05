@@ -1,26 +1,62 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<h1>Create a wishlist</h1>
+{% if user_id is not None %}
+<div>
+<div class="index_wish">
+    <center>
+        <a class="index_a" href="{% url 'user_wishlists' username %}">Create a Wishlist</a>
+        <ul style="color: blueviolet;">
+            <li><span>Create an online wishlist on "My Wishlists"</span></li>
+            <li><span>Add items from any store</span></li>
+            <li><span>Family & friends can reserve gifts</span></li>
+            <li><span>Easy and free</span></li>
+          </ul>
+    </center>
+</div>
+<div class="index_shop">
+    <center>
+        <a class="index_a" href="{% url 'user_shoplists' username %}">Create a Shopping List</a>
+        <ul style="color: #4CAF50;">
+            <li><span>Create an online shopping list on "My Shopping Lists"</span></li>
+            <li><span>Add products in your list.</span></li>
+            <li><span>Family & friends can use your shopping lists</span></li>
+            <li><span>Easy and free</span></li>
+        </ul>
+    </center>
+</div>
+</div>
 
-<h3>Create an online wishlist on My Wishlist.</h3>
-<ul>
-    <li>Add items from any store</li>
-    <li>Family & friends can reserve gifts</li>
-    <li>Easy and free</li>
-</ul>
-    {% if user_id is not None %}
-        <h1>My Shopping List and Wish List will be here</h1>
-        <a class="btn" href="{% url 'user_wishlists' username %}">My wishlists</a>
-        <a class="b" href="{% url 'user_shoplists' username %}">My shopping lists</a>
-    {% else %}
-        <h1>1. Create Wishlist</h1><h1 class="right">Create Shopping List</h1>
-        <p>Creating your wishlist is easy! Add items from any store.</p><p class="right">Creating your shopping list is easy! Add products in your list.</p>
-        <h1>2. Send</h1><h1 class="right">2. Send</h1>
-        <p>Send your wishlist to anyone. By email, chat or social media.</p><p class="right">Send your wishlist to anyone. By email, chat or social media.</p>
-        <h1>3. Reserve</h1><h1 class="right">3. Usability</h1>
-        <p>Family and friends can reserve their gifts on your wishlist. Useful!</p><p class="right">Anyone can use your list to shop. Even husband!<p/>
 
-    {% endif %}
+{% else %}
+    <div>
+        <div class="index_wish">
+            <center>
+                <h1>Wishlist</h1>
+                <ol style="color: blueviolet;">
+                    <li><span>Create Wishlist</span></li>
+                    <p>Creating your wishlist is easy! Add items from any store.</p>
+                    <li><span>Send</span></li>
+                    <p>Send your wishlist to anyone. By email, chat or social media.</p>
+                    <li><span>Reserve</span></li>
+                    <p>Family and friends can reserve their gifts on your wishlist. Useful!</p>
+                </ol>
+            </center>
+        </div>
+        <div class="index_shop">
+            <center>
+                <h1>Shopping list</h1>
+                <ol style="color: #4CAF50;">
+                    <li><span>Create Shopping List</span></li>
+                    <p>Creating your shopping list is easy! Add products in your list.</p>
+                    <li><span>Send</span></li>
+                    <p>Send your wishlist to anyone. By email, chat or social media.</p>
+                    <li><span>Usability</span></li>
+                    <p>Anyone can use your list to shop. Even husband!</p>
+                </ol>
+            </center>
+        </div>
+    </div>
+{% endif %}
 
 {% endblock %}
