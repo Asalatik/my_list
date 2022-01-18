@@ -9,7 +9,7 @@ SECRET_KEY = os.environ['secret_key']
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['asalatiklist.herokuapp.com/', '127.0.0.1']
+ALLOWED_HOSTS = ['asalatiklist.herokuapp.com', '127.0.0.1']
 
 
 INSTALLED_APPS = [
