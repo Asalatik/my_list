@@ -1,0 +1,93 @@
+.all_style {
+    background-color: khaki;
+    font-family: "Comic Sans MS";
+    font-size: large;
+}
+
+.head {
+  overflow: hidden;
+  background-color: #f7ba5b;
+}
+
+.head a {
+  float: left;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.head a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.head a.active {
+  background-color: #4CAF50;
+  color: blueviolet;
+}
+
+.btn {
+    display: inline-block; /* Строчно-блочный элемент */
+    background: cornflowerblue; /* Синий цвет фона */
+    color: white; /* Белый цвет текста */
+    padding: 1rem 1.5rem; /* Поля вокруг текста */
+    text-decoration: none; /* Убираем подчёркивание */
+    border-radius: 3px; /* Скругляем уголки */
+   }
+
+.b {
+    float: right;
+    display: inline-block; /* Строчно-блочный элемент */
+    background: cornflowerblue; /*Синий цвет фона */
+    color: white; /* Белый цвет текста */
+    padding: 1rem 1.5rem; /* Поля вокруг текста */
+    text-decoration: none; /* Убираем подчёркивание */
+    border-radius: 3px; /* Скругляем уголки */
+}
+
+.btn2 {
+    float: right;
+    display: inline-block; /* Строчно-блочный элемент */
+    background: darkcyan; /* Серый цвет фона */
+    color: white; /* Белый цвет текста */
+    padding: 1rem 1.5rem; /* Поля вокруг текста */
+    text-decoration: none; /* Убираем подчёркивание */
+    border-radius: 3px; /* Скругляем уголки */
+}
+
+.h {
+    font-size: 60px;
+    margin-top: 10%;
+    color: #4CAF50;
+}
+
+.h2 {
+    font-size: 30px;
+    margin-top: 10%;
+    color: lightcoral;
+}
+
+.right {
+    float: right;
+    color: green;
+}
+
+.index_a {
+    text-decoration: none;
+    color: lightcoral;
+    font-size: 35px;
+}
+
+.index_wish {
+    width: 300px;
+    color: lightcoral;
+    float: left;
+}
+
+.index_shop {
+    width: 300px;
+    color:lightcoral;
+    float: right;
+}
