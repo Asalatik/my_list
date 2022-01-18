@@ -1,12 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-from django.conf import settings
 
 
 class Product(models.Model):
     """
     table of products
+
+    title - name of product
+    link - link to online market
+    price - price of product
+    image - image of product
+    money -
+    created_at - date and time of createa product
+    note - note of product
+    product_type - type of product
     """
     title = models.CharField(max_length=120)
     link = models.URLField()
@@ -22,8 +30,13 @@ class Product(models.Model):
 
 
 class Wishlist(models.Model):
-    """table for presents list
+    """
+    table for list of presents
 
+    title - name of wishlist
+    product - list of products
+    is_hidden - hidden or not
+    owner - owner of wishlist
     """
 
     title = models.CharField(max_length=120)
@@ -38,6 +51,11 @@ class Wishlist(models.Model):
 class Shoplist(models.Model):
     """
     table for shopping list
+
+    title - name of shopping list
+    product - list of products
+    is_hidden - hidden or not
+    owner - owner of shopping list
     """
     title = models.CharField(max_length=120)
     product = models.ManyToManyField(Product)

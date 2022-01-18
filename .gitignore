@@ -2,3 +2,4 @@
 /mylist/passwords.py
 /media/
 __pycache__
+/mylist/.env
